@@ -33,8 +33,6 @@ export const FormInputDropdown = <T extends FieldValues>({
   placeholder,
   control,
   label,
-  disabled = false,
-  clearable = false,
   isRequired,
   options,
 }: FormInputDateProps<T>) => {

@@ -37,7 +37,6 @@ export const FormInputSelect = <T extends FieldValues>({
   labelChildren,
   disabled = false,
   clearable = false,
-  onChange,
   options,
 }: FormInputSelectProps<T>) => {
   return (

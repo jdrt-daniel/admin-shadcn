@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import LoadingButton from "./button/LoadingButton";
-import { FormInputText } from "./form/FormInputText";
+import LoadingButton from "../../../components/button/LoadingButton";
+import { FormInputText } from "../../../components/form/FormInputText";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -44,7 +44,7 @@ export function LoginForm({
       console.log(data);
       setTimeout(() => {
         setLoading(false);
-        router.push("/dashboard");
+        router.push("/admin");
       }, 1000);
     } catch (error) {
       console.log(error);

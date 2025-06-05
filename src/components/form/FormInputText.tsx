@@ -31,7 +31,6 @@ export const FormInputText = <T extends FieldValues>({
   labelChildren,
   disabled = false,
   clearable = false,
-  onChange,
 }: FormInputTextProps<T>) => {
   const [typeSelect, setTypeSelect] = useState(type);
 

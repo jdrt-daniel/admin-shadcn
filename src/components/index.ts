@@ -3,4 +3,4 @@ export * from "./form/FormInputDropdown";
 export * from "./form/FormInputText";
 export * from "./form/FormInputSelect";
 
-export * from "./text/typography";
+export * from "./text/Typography";

@@ -1,7 +1,7 @@
-import { Suspense } from "react";
+import { AuthProvider } from "@/context/AuthProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AuthProvider } from "@/context/AuthProvider";
+import { Suspense } from "react";
 
 import "./globals.css";
 
