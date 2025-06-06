@@ -1,28 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
 import {
   IconCamera,
-  IconChartBar,
   IconDashboard,
   IconDatabase,
   IconFileAi,
   IconFileDescription,
   IconFileWord,
-  IconFolder,
   IconHelp,
   IconInnerShadowTop,
   IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
-  IconUsers,
-} from "@tabler/icons-react"
+} from "@tabler/icons-react";
+import * as React from "react";
 
-import { NavDocuments } from "@/components/nav-documents"
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -31,7 +26,8 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { IdCardIcon, UsersIcon } from "lucide-react";
 
 const data = {
   user: {
@@ -41,29 +37,49 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
-      url: "#",
-      icon: IconDashboard,
+      title: "Inicio",
+      items: [
+        {
+          title: "Dashboard",
+          url: "/admin",
+          icon: IconDashboard,
+        },
+        {
+          title: "Perfil",
+          url: "/admin/perfil",
+          icon: IconListDetails,
+        },
+      ],
     },
     {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
+      title: "Principal",
+      items: [
+        {
+          title: "Usuarios",
+          url: "/admin/usuarios",
+          icon: IdCardIcon,
+        },
+        {
+          title: "Personas",
+          url: "/admin/personas",
+          icon: UsersIcon,
+        },
+        {
+          title: "Roles",
+          url: "/admin/roles",
+          icon: IconListDetails,
+        },
+        {
+          title: "Menus",
+          url: "/admin/menus",
+          icon: IconListDetails,
+        },
+        {
+          title: "Permisos",
+          url: "/admin/permisos",
+          icon: IconListDetails,
+        },
+      ],
     },
   ],
   navClouds: [
@@ -148,7 +164,7 @@ const data = {
       icon: IconFileWord,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -169,13 +185,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain sections={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
