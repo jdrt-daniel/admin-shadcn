@@ -12,7 +12,7 @@ import * as yup from "yup";
 import LoadingButton from "../../../components/button/LoadingButton";
 import { FormInputText } from "../../../components/form/FormInputText";
 
-const schema = yup.object().shape({
+const schema = yup.object({
   email: yup.string().email().required(),
   password: yup.string().required(),
 });
