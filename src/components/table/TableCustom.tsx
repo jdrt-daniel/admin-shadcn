@@ -6,8 +6,6 @@ import {
   IconChevronsLeft,
   IconChevronsRight,
   IconLayoutColumns,
-  IconLoader2,
-  IconPlus,
 } from "@tabler/icons-react";
 import {
   ColumnDef,
@@ -20,6 +18,7 @@ import {
   Row,
   useReactTable,
 } from "@tanstack/react-table";
+import { ReactNode } from "react";
 import { InputSearchDebounce } from "../inputs/InputSearchDebounce";
 import { Button } from "../ui/button";
 import {
@@ -44,6 +43,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import { TableSkeleton } from "./TableSkeleton";
 
 interface DataTableProps {
   columns: ColumnDef<any>[];
@@ -52,12 +52,12 @@ interface DataTableProps {
   isLoading?: boolean;
   searchQuery?: string;
   pagination: PaginationState;
-  onSearch: (query: string) => void;
+  onSearch?: (query: string) => void;
   onPaginationChange: (pagination: PaginationState) => void;
-  onAddNew?: () => void;
+  actions?: Array<ReactNode>;
 }
 
-export const MainTable = ({
+export const TableCustom = ({
   columns,
   data,
   totalRows,
@@ -66,7 +66,7 @@ export const MainTable = ({
   pagination,
   onSearch,
   onPaginationChange,
-  onAddNew,
+  actions,
 }: DataTableProps) => {
   const table = useReactTable({
     data,
@@ -83,15 +83,21 @@ export const MainTable = ({
     },
   });
 
+  if (isLoading) {
+    return <TableSkeleton columns={columns} rows={pagination.pageSize} />;
+  }
+
   return (
     <div className="w-full flex-col gap-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <InputSearchDebounce
-            searchQuery={searchQuery}
-            setSearchQuery={onSearch}
-            clearable
-          />
+          {onSearch && (
+            <InputSearchDebounce
+              searchQuery={searchQuery}
+              setSearchQuery={onSearch}
+              clearable
+            />
+          )}
         </div>
         <div className="flex items-center gap-2">
           <DropdownMenu>
@@ -127,28 +133,18 @@ export const MainTable = ({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          {onAddNew && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onAddNew}
-              className="bg-primary text-white hover:bg-primary/30 hover:text-black"
-            >
-              <IconPlus />
-              <span className="hidden lg:inline">Agregar nuevo</span>
-            </Button>
-          )}
+          {actions}
         </div>
       </div>
 
       <div className="overflow-hidden rounded-lg border">
         <Table>
-          <TableHeader className="bg-muted sticky top-0 z-10">
+          <TableHeader className="bg-muted top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} colSpan={header.colSpan}>
+                    <TableHead key={Math.random()}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -162,34 +158,26 @@ export const MainTable = ({
             ))}
           </TableHeader>
           <TableBody className="**:data-[slot=table-cell]:first:w-8">
-            {isLoading ? (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-100 text-center"
-                >
-                  <div className="flex justify-center items-center">
-                    <IconLoader2 className="animate-spin" />
-                    <span className="ml-2">Cargando...</span>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ) : table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => {
+                return (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => {
+                      return (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell

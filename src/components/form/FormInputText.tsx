@@ -39,12 +39,12 @@ export const FormInputText = <T extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <div className="grid gap-2">
+        <div className="">
           <div className="flex items-center">
-            <Label htmlFor={id}>
+            <Label htmlFor={id} className="mb-3">
               {label}
 
-              {isRequired && <span className="text-red-500 ml-1">*</span>}
+              {isRequired && <span className="text-red-500">*</span>}
             </Label>
             {labelChildren}
           </div>
@@ -57,6 +57,7 @@ export const FormInputText = <T extends FieldValues>({
               placeholder={placeholder}
               disabled={disabled}
               className={cn(
+                "rounded-sm",
                 error && "border-red-500 focus-visible:ring-red-500"
               )}
             />
@@ -83,7 +84,9 @@ export const FormInputText = <T extends FieldValues>({
               </Button>
             )}
           </div>
-          {error && <small className="text-red-500">{error.message}</small>}
+          {error && (
+            <small className="text-red-500 ml-1">{error.message}</small>
+          )}
         </div>
       )}
     />

@@ -1,6 +1,7 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { Typography } from "@/components";
+import { Button } from "@/components/ui/button";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -14,10 +15,15 @@ export type Payment = {
   telefono: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns = ({ onEdit, onDelete }) => [
   {
     accessorKey: "nombre",
     header: "Nombre",
+    cell: ({ row }) => {
+      return (
+        <Typography className="font-bold">{row.original.nombre}</Typography>
+      );
+    },
   },
   {
     accessorKey: "apellido",
@@ -38,5 +44,29 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "telefono",
     header: "Telefono",
+  },
+  {
+    accessorKey: "acciones",
+    header: "Acciones",
+    cell: ({ row }) => {
+      return (
+        <div className="flex flex-row gap-2">
+          <Button
+            variant="default"
+            size="sm"
+            onClick={() => onEdit(row.original.id)}
+          >
+            Editar
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onDelete(row.original.id)}
+          >
+            Eliminar
+          </Button>
+        </div>
+      );
+    },
   },
 ];

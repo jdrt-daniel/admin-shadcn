@@ -1,11 +1,13 @@
 import { cn } from "@/lib/utils";
 
 export function Typography({
-  variant = "body1",
+  variant = "inherit",
   color = "inherit",
   children,
+  className,
 }: {
   variant?:
+    | "inherit"
     | "h1"
     | "h2"
     | "h3"
@@ -28,11 +30,13 @@ export function Typography({
     | "error";
 
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
     <p
       className={cn(
         "pb-0",
+        variant === "inherit" && "text-inherit",
         variant === "h1" && "text-[3.5em] font-bold",
         variant === "h2" && "text-[3em] font-bold",
         variant === "h3" && "text-[2.5em] font-bold",
@@ -51,7 +55,8 @@ export function Typography({
         color === "info" && "text-cyan-400",
         color === "success" && "text-green-400",
         color === "warning" && "text-yellow-400",
-        color === "error" && "text-red-400"
+        color === "error" && "text-red-400",
+        className
       )}
     >
       {children}

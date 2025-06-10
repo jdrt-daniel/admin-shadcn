@@ -20,7 +20,7 @@ export const InputSearchDebounce = ({
 
   const debounced = useDebouncedCallback((value: string) => {
     setSearchQuery(value);
-  }, 1000);
+  }, 500);
 
   const onClear = () => {
     setText("");
