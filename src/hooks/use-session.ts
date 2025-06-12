@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { imprimir, leerCookie } from "@/utils";
+import {
+  delay,
+  eliminarCookie,
+  guardarCookie,
+  imprimir,
+  leerCookie,
+} from "@/utils";
 import { peticionFormatoMetodo, Servicios } from "./use-services";
+import { Constantes } from "@/config/Constantes";
 
 export const useSession = () => {
   const sesionPeticion = async ({
@@ -57,7 +64,66 @@ export const useSession = () => {
     }
   };
 
+  const borrarCookiesSesion = () => {
+    eliminarCookie("token"); // Eliminando access_token
+    eliminarCookie("jid"); // Eliminando refresh token
+  };
+
+  const cerrarSesion = async () => {
+    try {
+      // mostrarFullScreen()
+      await delay(1000);
+      const token = leerCookie("token");
+      borrarCookiesSesion();
+
+      const respuesta = await Servicios.get({
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        url: `${Constantes.baseUrl}/logout`,
+      });
+      imprimir(`finalizando con respuesta`, respuesta);
+
+      if (respuesta?.url) {
+        window.location.href = respuesta?.url;
+      } else {
+        // router.refresh()
+        window.location.reload();
+      }
+    } catch (e) {
+      imprimir(`Error al cerrar sesión: `, e);
+      // router.refresh()
+      window.location.reload();
+    } finally {
+      // ocultarFullScreen()
+    }
+  };
+
+  const actualizarSesion = async () => {
+    imprimir(`Actualizando token 🚨`);
+
+    try {
+      const respuesta = await Servicios.post({
+        url: `${Constantes.baseUrl}/token`,
+        body: {
+          token: leerCookie("token"),
+        },
+      });
+      const token = leerCookie("token");
+      if (token) guardarCookie("token", respuesta.datos.access_token);
+
+      await delay(1000);
+    } catch (e) {
+      console.error(e);
+      await cerrarSesion();
+    }
+  };
+
   return {
     sesionPeticion,
+    borrarCookiesSesion,
+    cerrarSesion,
+    actualizarSesion,
   };
 };

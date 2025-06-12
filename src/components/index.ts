@@ -11,6 +11,8 @@ export * from "./modal/ModalCustom";
 
 export * from "./alerts/AlertCustom";
 
+export * from "./layouts/LayoutPermissions";
+
 export * from "./ui/button";
 export * from "./ui/card";
 export * from "./ui/checkbox";

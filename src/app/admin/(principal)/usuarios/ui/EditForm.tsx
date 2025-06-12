@@ -12,8 +12,8 @@ interface FormSchema {
 }
 
 const schema = yup.object({
-  nombre: yup.string().required("Requerido"),
-  apellido: yup.string().required("Requerido"),
+  nombre: yup.string().required("El nombre es requerido"),
+  apellido: yup.string().required("El apellido es requerido"),
 });
 
 interface EditFormProps {
@@ -55,7 +55,12 @@ export const EditForm = ({ onSubmit, onCancel }: EditFormProps) => {
         </GridItem>
       </GridContent>
       <div className="flex justify-end mt-4">
-        <Button variant="outline" onClick={onCancel} className="mr-2">
+        <Button
+          variant="outline"
+          onClick={onCancel}
+          className="mr-2"
+          type="button"
+        >
           Cancelar
         </Button>
         <Button type="submit">Guardar</Button>

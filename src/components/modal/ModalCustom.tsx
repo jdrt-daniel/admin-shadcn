@@ -1,5 +1,14 @@
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 import React from "react";
 import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -9,16 +18,6 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "../ui/drawer";
-import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { cn } from "@/lib/utils";
 
 interface ModalBaseProps {
   open: boolean;
@@ -46,9 +45,6 @@ export const ModalCustom = ({
         onOpenChange={onClose ? () => onClose() : undefined}
         modal
       >
-        <DialogTrigger asChild>
-          <Button variant="outline">Edit Profile</Button>
-        </DialogTrigger>
         <DialogContent
           className={cn(
             size === "sm" && "max-w-[425px]",

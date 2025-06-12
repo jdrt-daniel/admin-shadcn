@@ -56,6 +56,7 @@ export const FormInputText = <T extends FieldValues>({
               // required
               placeholder={placeholder}
               disabled={disabled}
+              autoComplete="on"
               className={cn(
                 "rounded-sm",
                 error && "border-red-500 focus-visible:ring-red-500"

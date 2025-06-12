@@ -10,9 +10,11 @@ import { AlertCustom, Button, ModalCustom, TableCustom } from "@/components";
 import { delay } from "@/utils";
 import { columns } from "./ui/columns";
 import { EditForm } from "./ui/EditForm";
+import { useAuth } from "@/context/AuthProvider";
 
 export default function UserPage() {
   const { sesionPeticion } = useSession();
+  const {} = useAuth();
 
   const [alertOpen, setAlertOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -111,6 +113,8 @@ export default function UserPage() {
 
   return (
     <div className="p-4">
+      <title>Usuarios</title>
+
       <AlertCustom
         open={alertOpen}
         variant="error"

@@ -23,14 +23,11 @@ interface item {
 
 interface section {
   title: string;
-  icon?: Icon;
   items: item[];
 }
 
 export function NavMain({ sections }: { sections: section[] }) {
   const pathname = usePathname();
-
-  console.log(pathname);
 
   return (
     <SidebarGroup>
